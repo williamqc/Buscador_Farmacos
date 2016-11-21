@@ -1,4 +1,4 @@
-package ar.edu.peliculasNeo4J.repo
+package ar.edu.farmacosNeo4j.repo
 
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.neo4j.graphdb.GraphDatabaseService

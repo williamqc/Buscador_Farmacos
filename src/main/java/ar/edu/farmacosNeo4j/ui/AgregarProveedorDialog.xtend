@@ -1,7 +1,7 @@
-package ar.edu.peliculasNeo4J.ui
+package ar.edu.farmacosNeo4j.ui
 
-import ar.edu.peliculasNeo4J.appModel.AgregarPersonaje
-import ar.edu.peliculasNeo4J.domain.Actor
+import ar.edu.farmacosNeo4j.appModel.AgregarProveedor
+import ar.edu.farmacosNeo4j.domain.Farmaco
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Button
@@ -15,11 +15,11 @@ import org.uqbar.arena.windows.WindowOwner
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 
-class AgregarPersonajeDialog extends Dialog<AgregarPersonaje> {
+class AgregarProveedorDialog extends Dialog<AgregarProveedor> {
 
-	new(WindowOwner owner, AgregarPersonaje model) {
+	new(WindowOwner owner, AgregarProveedor model) {
 		super(owner, model)
-		title = "Agregar un personaje a la película " + model.pelicula
+		title = "Agregar un proveedor del farmaco " + model.farmaco
 	}
 
 	override protected createFormPanel(Panel mainPanel) {
@@ -27,39 +27,39 @@ class AgregarPersonajeDialog extends Dialog<AgregarPersonaje> {
 			layout = new ColumnLayout(1)
 		]
 		new Label(panelRoles) => [
-			text = "Roles que cumple el actor en la película"
+			text = "nombre del laboratorio del farmaco"
 		]
 		new TextBox(panelRoles) => [
 			width = 300
-			value <=> "rol"
+			value <=> "name"
 		]
 		
 		val panelActor = new GroupPanel(mainPanel, this.modelObject) => [
-			title = "Actor"
+			title = "Farmaco"
 		] 
 		val panelValoresBusqueda = new Panel(panelActor)
 		panelValoresBusqueda.layout = new HorizontalLayout
 		new TextBox(panelValoresBusqueda) => [
-			value <=> "actorBusqueda"
+			value <=> "farmacoBusqueda"
 			width = 300
 		]
 		new Button(panelValoresBusqueda) => [
 			caption = "Buscar"
-			onClick [ | modelObject.buscarActor ]
+			onClick [ | modelObject.buscarFarmaco ]
 		]
 		
-		val table = new Table<Actor>(panelActor, typeof(Actor)) => [
+		val table = new Table<Farmaco>(panelActor, typeof(Farmaco)) => [
 			numberVisibleRows = 10
 			width = 650
-			items <=> "actores"
-			value <=> "actorSeleccionado"
+			items <=> "laboratorios"
+			value <=> "laboratorioSeleccionado"
 		]
-		TableColumnBuilder.buildColumn(table, "Actor", 550, "nombreCompleto")
-		TableColumnBuilder.buildColumn(table, "Año nac.", 100, "anioNacimiento")
+		TableColumnBuilder.buildColumn(table, "labdescripcion", 550, "descripcionCompleta")
+		TableColumnBuilder.buildColumn(table, "telefono", 100, "Telefono")
 		
 		val filaAgregar = new Panel(mainPanel)
 		new Button(filaAgregar) => [
-			caption = "Agregar personaje"
+			caption = "Agregar proveedor"
 			onClick [|
 				modelObject.aceptar
 				// TODO: Validar

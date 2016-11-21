@@ -1,10 +1,10 @@
-package ar.edu.peliculasNeo4J.ui
+package ar.edu.farmacosNeo4j.ui
 
-import ar.edu.peliculasNeo4J.appModel.AgregarPersonaje
-import ar.edu.peliculasNeo4J.appModel.EditarPelicula
-import ar.edu.peliculasNeo4J.domain.Pelicula
-import ar.edu.peliculasNeo4J.domain.Personaje
-import ar.edu.peliculasNeo4J.repo.RepoPeliculas
+import ar.edu.farmacosNeo4j.appModel.AgregarProveedor
+import ar.edu.farmacosNeo4j.appModel.EditarFarmaco
+import ar.edu.farmacosNeo4j.domain.Farmaco
+import ar.edu.farmacosNeo4j.domain.Proveedor
+import ar.edu.farmacosNeo4j.repo.RepoFarmacos
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.HorizontalLayout
@@ -20,14 +20,14 @@ import org.uqbar.commons.utils.ApplicationContext
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 
-class EditarPeliculaWindow extends Dialog<EditarPelicula> {
+class EditarFarmacoWindow extends Dialog<EditarFarmaco> {
 
-	new(WindowOwner owner, EditarPelicula editarPelicula) {
-		super(owner, editarPelicula)
-		if (editarPelicula.modoAlta) {
-			title = "Nueva pelicula"
+	new(WindowOwner owner, EditarFarmaco editarFarmaco) {
+		super(owner, editarFarmaco)
+		if (editarFarmaco.modoAlta) {
+			title = "Nueva farmaco"
 		} else {
-			title = "Editar datos de la pelicula"
+			title = "Editar datos de la farmaco"
 		}
 	}
 
@@ -40,20 +40,26 @@ class EditarPeliculaWindow extends Dialog<EditarPelicula> {
 	override protected createFormPanel(Panel panelIzquierdo) {
 		val form = new Panel(panelIzquierdo)
 		form.layout = new ColumnLayout(2)
-		new Label(form).text = "Título"
+		new Label(form).text = "descripcion"
 		new TextBox(form) => [
-			value <=> "pelicula.titulo"
+			value <=> "farmaco.descripcion"
+			width = 250
+		]
+		
+		new Label(form).text = "unidad"
+		new TextBox(form) => [
+			value <=> "farmaco.unidad"
 			width = 250
 		]
 
-		new Label(form).text = "Frase"
-		new TextBox(form) => [
-			value <=> "pelicula.frase"
-			width = 250
-		]
-		new Label(form).text = "Año"
+		new Label(form).text = "costo"
 		new NumericField(form) => [
-			value <=> "pelicula.anio"
+			value <=> "farmaco.costo"
+			width = 90
+		]
+		new Label(form).text = "PrVenta"
+		new NumericField(form) => [
+			value <=> "farmaco.prventa"
 			width = 90
 		]
 	}
@@ -73,8 +79,10 @@ class EditarPeliculaWindow extends Dialog<EditarPelicula> {
 		]
 
 		new Button(botonera) => [
-			caption = "Agregar personaje"
-			onClick [|this.agregarPersonaje]
+			caption = "Agregar proveedor"
+			onClick [|
+				this.agregarProveedor
+			]
 		]
 
 		new Button(botonera) => [
@@ -90,36 +98,36 @@ class EditarPeliculaWindow extends Dialog<EditarPelicula> {
 		val panelDerecho = new Panel(mainPanel)
 
 		// Llevar a otra pantalla los personajes
-		val table = new Table<Personaje>(panelDerecho, typeof(Personaje)) => [
+		val table = new Table<Proveedor>(panelDerecho, typeof(Proveedor)) => [
 			numberVisibleRows = 5
 			width = 650
-			items <=> "pelicula.personajes"
-			value <=> "personajeSeleccionado"
+			items <=> "farmaco.proveedores"
+			value <=> "proveedorSeleccionado"
 		]
-		TableColumnBuilder.buildColumn(table, "Roles", 250, "rolesMostrables")
-		TableColumnBuilder.buildColumn(table, "Actor", 250, "actor.nombreCompleto")
+		TableColumnBuilder.buildColumn(table, "Laboratorio", 250, "laboratoriosMostrables")
+		TableColumnBuilder.buildColumn(table, "Farmaco", 250, "laboratorio.nombreCompleto")
 
 		this.createGridActions(panelDerecho)
 	}
 
-	def getRepoPeliculas() {
-		ApplicationContext.instance.getSingleton(typeof(Pelicula)) as RepoPeliculas
+	def getRepoFarmacos() {
+		ApplicationContext.instance.getSingleton(typeof(Farmaco)) as RepoFarmacos
 	}
 
 	def void createGridActions(Panel mainPanel) {
 		val actionsPanel = new Panel(mainPanel)
 		actionsPanel.setLayout(new HorizontalLayout)
-		val elementSelected = new NotNullObservable("personajeSeleccionado")
+		val elementSelected = new NotNullObservable("proveedorSeleccionado")
 
 		new Button(actionsPanel) => [
-			caption = "Eliminar personaje"
-			onClick [|modelObject.eliminarPersonaje]
+			caption = "Eliminar proveedor"
+			onClick [|modelObject.eliminarProveedor]
 			bindEnabled(elementSelected)
 		]
 	}
 
-	def void agregarPersonaje() {
-		this.openDialog(new AgregarPersonajeDialog(this, new AgregarPersonaje(modelObject.pelicula)))
+	def void agregarProveedor() {
+		this.openDialog(new AgregarProveedorDialog(this, new AgregarProveedor(modelObject.farmaco)))
 	}
 
 	def openDialog(Dialog<?> dialog) {

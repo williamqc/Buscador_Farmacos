@@ -1,4 +1,4 @@
-package ar.edu.peliculasNeo4J.repo
+package ar.edu.farmacosNeo4j.repo
 
 import java.io.File
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -14,7 +14,7 @@ class GraphDatabaseProvider {
 	
 	private new() {
 		val GraphDatabaseFactory dbFactory = new GraphDatabaseFactory
-		graphDb = dbFactory.newEmbeddedDatabase(new File(PATH ))
+		graphDb = dbFactory.newEmbeddedDatabase(new File(PATH + "/graph.db" ))
 	}
 	
 	def static instance() {

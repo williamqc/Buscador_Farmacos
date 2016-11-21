@@ -1,17 +1,18 @@
-package ar.edu.peliculasNeo4J.domain
+package ar.edu.farmacosNeo4j.domain
 
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.uqbar.commons.utils.Observable
 
 @Accessors
 @Observable
-class Actor {
+class Laboratorio {
 	Long id
-	String nombreCompleto
-	int anioNacimiento
+	String labdescripcion
+	int telefono
+	String direccion
 	
 	override toString() {
-		nombreCompleto
+		labdescripcion
 	}
 	
 }

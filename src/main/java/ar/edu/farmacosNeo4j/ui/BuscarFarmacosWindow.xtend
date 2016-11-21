@@ -1,8 +1,8 @@
-package ar.edu.peliculasNeo4J.ui
+package ar.edu.farmacosNeo4j.ui
 
-import ar.edu.peliculasNeo4J.appModel.BuscarPeliculas
-import ar.edu.peliculasNeo4J.appModel.EditarPelicula
-import ar.edu.peliculasNeo4J.domain.Pelicula
+import ar.edu.farmacosNeo4j.appModel.BuscaraFarmacos
+import ar.edu.farmacosNeo4j.appModel.EditarFarmaco
+import ar.edu.farmacosNeo4j.domain.Farmaco
 import java.awt.Color
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.layout.HorizontalLayout
@@ -18,14 +18,14 @@ import org.uqbar.arena.windows.WindowOwner
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 
-class BuscarPeliculasWindow extends SimpleWindow<BuscarPeliculas> {
+class BuscarFarmacosWindow extends SimpleWindow<BuscaraFarmacos> {
 	
-	new(WindowOwner parent, BuscarPeliculas model) {
+	new(WindowOwner parent, BuscaraFarmacos model) {
 		super(parent, model)
 	}
 
 	override def createMainTemplate(Panel mainPanel) {
-		title = "Buscador de Películas"
+		title = "Buscador de Farmacos"
 		taskDescription = "Ingrese los parámetros de búsqueda"
 
 		super.createMainTemplate(mainPanel)
@@ -35,8 +35,8 @@ class BuscarPeliculasWindow extends SimpleWindow<BuscarPeliculas> {
 		
 	override protected addActions(Panel actionsPanel) {
 		new Button(actionsPanel) => [
-			caption = "Agregar una película"
-			onClick [ | this.crearPelicula ]
+			caption = "Agregar una farmaco"
+			onClick [ | this.crearFarmaco ]
 			setAsDefault
 		]
 		new Button(actionsPanel) => [
@@ -70,11 +70,11 @@ class BuscarPeliculasWindow extends SimpleWindow<BuscarPeliculas> {
 	 * dispara la notificación a la grilla que funciona como Observer
 	 */
 	def protected createResultsGrid(Panel mainPanel) {
-		var table = new Table<Pelicula>(mainPanel, typeof(Pelicula)) => [
+		var table = new Table<Farmaco>(mainPanel, typeof(Farmaco)) => [
 			numberVisibleRows = 10
 			width = 650
-			items <=> "peliculas"
-			value <=> "peliculaSeleccionada"
+			items <=> "farmaco"
+			value <=> "farmacoSeleccionada"
 		]
 		this.describeResultsGrid(table)
 	}
@@ -86,23 +86,30 @@ class BuscarPeliculasWindow extends SimpleWindow<BuscarPeliculas> {
 	 *
 	 * @param table
 	 */
-	def void describeResultsGrid(Table<Pelicula> table) {
-		new Column<Pelicula>(table) => [
-			title = "Título"
+	def void describeResultsGrid(Table<Farmaco> table) {
+		new Column<Farmaco>(table) => [
+			title = "Descripcion"
 			fixedSize = 150
-			bindContentsToProperty("titulo")
+			bindContentsToProperty("descripcion")
 		]
+		
+		new Column<Farmaco>(table) => [
+			title = "Unidad"
+			fixedSize = 150
+			bindContentsToProperty("unidad")
+		]
+		
 
-		new Column<Pelicula>(table) => [
-			title = "Frase"
+		new Column<Farmaco>(table) => [
+			title = "Costo"
 			fixedSize = 200
-			bindContentsToProperty("frase")
+			bindContentsToProperty("costo")
 		]
 
-		new Column<Pelicula>(table) => [
-			title = "Año"
+		new Column<Farmaco>(table) => [
+			title = "PrVenta"
 			fixedSize = 150
-			bindContentsToProperty("anio")
+			bindContentsToProperty("prventa")
 		]
 
 	}
@@ -110,28 +117,28 @@ class BuscarPeliculasWindow extends SimpleWindow<BuscarPeliculas> {
 	def void createGridActions(Panel mainPanel) {
 		val actionsPanel = new Panel(mainPanel)
 		actionsPanel.setLayout(new HorizontalLayout)
-		val elementSelected = new NotNullObservable("peliculaSeleccionada")
+		val elementSelected = new NotNullObservable("farmacoSeleccionada")
 		
 		new Button(actionsPanel) => [
 			caption = "Editar"
-			onClick [ | this.modificarPelicula]
+			onClick [ | this.modificarFarmaco]
 			bindEnabled(elementSelected)
 		]
 
 		new Button(actionsPanel) => [
 			caption = "Borrar"
-			onClick [ | modelObject.eliminarPeliculaSeleccionada]
+			onClick [ | modelObject.eliminarFarmacoSeleccionada]
 			bindEnabled(elementSelected)
 		]
 	}
 	
 	
-	def void crearPelicula() {
-		this.openDialog(new EditarPeliculaWindow(this, EditarPelicula.modoAlta))
+	def void crearFarmaco() {
+		this.openDialog(new EditarFarmacoWindow(this, EditarFarmaco.modoAlta))
 	}
 
-	def void modificarPelicula() {
-		this.openDialog(new EditarPeliculaWindow(this, EditarPelicula.modoEdicion(modelObject.peliculaSeleccionada)))
+	def void modificarFarmaco() {
+		this.openDialog(new EditarFarmacoWindow(this, EditarFarmaco.modoEdicion(modelObject.farmacoSeleccionada)))
 	}
 
 	def openDialog(Dialog<?> dialog) {

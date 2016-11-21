@@ -1,4 +1,4 @@
-package ar.edu.peliculasNeo4J.ui
+package ar.edu.farmacosNeo4j.ui
 
 import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
