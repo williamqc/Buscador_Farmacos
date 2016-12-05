@@ -10,7 +10,7 @@ class LaboratorioToNodeConverter {
 			id = nodeLaboratorio.id
 			labdescripcion = nodeLaboratorio.getProperty("descripcion", "") as String
 			telefono = (nodeLaboratorio.getProperty("telefono", 0L) as Long).intValue
-			direccion = nodeLaboratorio.getProperty("direcion", "") as String
+			direccion = nodeLaboratorio.getProperty("direccion", "") as String
 		]
 	}
 }

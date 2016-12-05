@@ -39,7 +39,7 @@ class RepoLaboratorios extends AbstractRepoNeo4J {
 	}
 
 	private def basicSearch(String where) {
-		val Result result = graphDb.execute("match (laboratorio:Farmacia) where " + where + " return laboratorio")
+		val Result result = graphDb.execute("match (laboratorio:Laboratorio) where " + where + " return laboratorio")
 		val Iterator<Node> farmaco_column = result.columnAs("laboratorio")
 		return farmaco_column
 	}

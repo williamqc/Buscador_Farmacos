@@ -1,7 +1,7 @@
 package ar.edu.farmacosNeo4j.ui
 
 import ar.edu.farmacosNeo4j.appModel.AgregarProveedor
-import ar.edu.farmacosNeo4j.domain.Farmaco
+import ar.edu.farmacosNeo4j.domain.Laboratorio
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Button
@@ -34,10 +34,10 @@ class AgregarProveedorDialog extends Dialog<AgregarProveedor> {
 			value <=> "name"
 		]
 		
-		val panelActor = new GroupPanel(mainPanel, this.modelObject) => [
+		val panelLaboratorio = new GroupPanel(mainPanel, this.modelObject) => [
 			title = "Farmaco"
 		] 
-		val panelValoresBusqueda = new Panel(panelActor)
+		val panelValoresBusqueda = new Panel(panelLaboratorio)
 		panelValoresBusqueda.layout = new HorizontalLayout
 		new TextBox(panelValoresBusqueda) => [
 			value <=> "farmacoBusqueda"
@@ -45,17 +45,17 @@ class AgregarProveedorDialog extends Dialog<AgregarProveedor> {
 		]
 		new Button(panelValoresBusqueda) => [
 			caption = "Buscar"
-			onClick [ | modelObject.buscarFarmaco ]
+			onClick [ | modelObject.buscarLaboratorio ]
 		]
 		
-		val table = new Table<Farmaco>(panelActor, typeof(Farmaco)) => [
+		val table = new Table<Laboratorio>(panelLaboratorio, typeof(Laboratorio)) => [
 			numberVisibleRows = 10
 			width = 650
 			items <=> "laboratorios"
 			value <=> "laboratorioSeleccionado"
 		]
-		TableColumnBuilder.buildColumn(table, "labdescripcion", 550, "descripcionCompleta")
-		TableColumnBuilder.buildColumn(table, "telefono", 100, "Telefono")
+		TableColumnBuilder.buildColumn(table, "Laboratorio", 550, "labdescripcion")
+		TableColumnBuilder.buildColumn(table, "Telefono", 100, "telefono")
 		
 		val filaAgregar = new Panel(mainPanel)
 		new Button(filaAgregar) => [

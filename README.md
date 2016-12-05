@@ -1,18 +1,12 @@
-# Películas - Proyecto Xtend contra una base Neo4J
+﻿# Películas - Proyecto Xtend contra una base Neo4J
 
 ## Objetivo
 Mostrar la integración entre una app hecha en JDK y Neo4J.
 
-Toma la base de películas de ejemplo que viene con Neo4J y permite 
 
-* generar una película nueva
-* buscar películas existentes y editarlas
-* agregar personajes
-* a futuro, permitirá la actualización de actores
 
-## Modelo Neo4J
-Existen nodos Movie (Película) y Person (que representan cada Actor), que tienen una relación
-ACTED_IN con atributos roles que terminan trasladándose al modelo de objetos como una clase Personaje.
+* generar una farmaco nuevo
+* buscar farmacos existentes y editarlas
 
 ## Cómo ejecutar el ejemplo
 
@@ -24,9 +18,9 @@ $ ./neo4j start
 ```
 
 * Abrir un Navegador e ingresar como URL: http://localhost:7474
-* Ejecutar el script que carga el grafo de películas
+* Ejecutar el script que  carga los registros del archivo.csv
 
-![video](video/crearPelis.gif)
+LOAD CSV FROM "file:///farmacos.csv" AS row CREATE (:Farmaco  {descripcion:row[0] , unidad:row[1], costo:toInt(row[2]), prventa:toInt(row[3])});
 
 * Bajar el servicio neo4j. Desde la carpeta bin hacer
 
@@ -37,16 +31,16 @@ $ ./neo4j stop
 * En el Eclipse, ingresar al archivo GraphDatabaseProvider y verificar que el PATH esté apuntando al directorio correcto
 
 ``` Xtend
-static String PATH = "/home/fernando/apps/neo4j-community-3.0.4/data/databases"
+static String PATH = "C:\Users\HP\Documents\Neo4j\default.graphdb"
 ```
 
-* Botón derecho sobre el archivo "Peliculas Neo4J.launch" y Run, si respetaste el nombre del proyecto: eg-peliculas-neo4j
+* Botón derecho sobre el archivo Farmacos Neo4J.launch" y Run, si respetaste el nombre del proyecto: wneo4j
 
-![video](video/demoApp.gif)
 
-Las modificaciones que hagas impactarán en el grafo de películas (podés hacer consultas luego).
 
-![video](video/grafo2.gif)
+Las modificaciones que hagas impactarán en el grafo de farmacos(puedes hacer consultas luego).
+
+
 
 
 ## Troubleshooting
@@ -61,9 +55,3 @@ Caused by: org.neo4j.kernel.StoreLockException: Store and its lock file has been
 
 Es que tenés que detener el servicio Neo4J, que en su versión Community no permite acceso por más de una aplicación a la vez.
 
-* Si no ves ninguna película al comenzar la aplicación, revisá el PATH adonde está apuntando la base de grafos de películas
-
-"# bvno4j" 
-"# bvno4j" 
-"# bvno4j" 
-"# bvno4j" 

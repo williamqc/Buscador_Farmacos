@@ -27,7 +27,7 @@ class AgregarProveedor {
 		farmaco.agregarProveedor(name, laboratorioSeleccionado)
 	}
 	
-	def void buscarFarmaco() {
+	def void buscarLaboratorio() {
 		laboratorios = repoLaboratorios.getLaboratorios(farmacoBusqueda)	
 	}
 

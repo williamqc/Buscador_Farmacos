@@ -51,10 +51,10 @@ class RepoFarmacos extends AbstractRepoNeo4J {
 	def convertToFarmaco(Node nodeFarmaco, boolean deep) {
 		new Farmaco => [
 			id = nodeFarmaco.id
-			descripcion = nodeFarmaco.getProperty("description") as String
-			unidad = nodeFarmaco.getProperty("unit") as String
-			costo = (nodeFarmaco.getProperty("cost", 0L) as Long).longValue
-			val released = nodeFarmaco.getProperty("released", null) as Long
+			descripcion = nodeFarmaco.getProperty("descripcion") as String
+			unidad = nodeFarmaco.getProperty("unidad") as String
+			costo = (nodeFarmaco.getProperty("costo", 0L) as Long).longValue
+			val released = nodeFarmaco.getProperty("prventa", null) as Long
 			if (released != null) {
 				prventa = released.longValue
 			}
@@ -103,7 +103,7 @@ class RepoFarmacos extends AbstractRepoNeo4J {
 	}
 
 	private def getNodosFarmacos(String valor) {
-		basicSearch("farm.description =~ '(?i).*" + valor + ".*'")
+		basicSearch("farm.descripcion =~ '(?i).*" + valor + ".*'")
 	}
 
 	private def Node getNodoFarmaco(Long id) {
@@ -111,17 +111,17 @@ class RepoFarmacos extends AbstractRepoNeo4J {
 	}
 	
 	private def basicSearch(String where) {
-		val Result result = graphDb.execute("match (farm:medicine) where " + where + " return farm")
+		val Result result = graphDb.execute("match (farm:Farmaco) where " + where + " return farm")
 		val Iterator<Node> farmaco_column = result.columnAs("farm")
 		return farmaco_column
 	}
 
 	private def void actualizarFarmaco(Farmaco farmaco, Node nodeFarmaco) {
 		nodeFarmaco => [
-			setProperty("description", farmaco.descripcion)
-			setProperty("unit", farmaco.unidad)
-			setProperty("cost", new Long(farmaco.costo))
-			setProperty("released", new Long(farmaco.prventa))
+			setProperty("descripcion", farmaco.descripcion)
+			setProperty("unidad", farmaco.unidad)
+			setProperty("costo", new Long(farmaco.costo))
+			setProperty("preventa", new Long(farmaco.prventa))
 			// Borro las relaciones que tenga ese nodo
 			relationships.forEach [it.delete ]
 			// Creo relaciones nuevas
@@ -139,6 +139,6 @@ class RepoFarmacos extends AbstractRepoNeo4J {
 	}
 
 	private def Label labelFarmaco() {
-		Label.label("medicine")
+		Label.label("Farmaco")
 	}
 }

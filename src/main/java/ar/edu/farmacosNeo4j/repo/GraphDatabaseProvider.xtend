@@ -14,7 +14,7 @@ class GraphDatabaseProvider {
 	
 	private new() {
 		val GraphDatabaseFactory dbFactory = new GraphDatabaseFactory
-		graphDb = dbFactory.newEmbeddedDatabase(new File(PATH + "/graph.db" ))
+		graphDb = dbFactory.newEmbeddedDatabase(new File(PATH ))
 	}
 	
 	def static instance() {
