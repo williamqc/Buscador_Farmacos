@@ -20,7 +20,7 @@ $ ./neo4j start
 * Abrir un Navegador e ingresar como URL: http://localhost:7474
 
 *creamos la clave primaria para nuestras tablas
-  $CREATE CONSTRAINT ON (p:Person) ASSERT p.userId IS UNIQUE;
+  $CREATE CONSTRAINT ON (p:Farmaco) ASSERT p.userId IS UNIQUE;
 
 * Ejecutar el script que  carga los registros del archivo.csv
 
