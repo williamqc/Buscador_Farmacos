@@ -1,4 +1,4 @@
-﻿# Películas - Proyecto Xtend contra una base Neo4J
+﻿#  Proyecto Xtend contra una base Neo4J
 
 ## Objetivo
 Mostrar la integración entre una app hecha en JDK y Neo4J.
@@ -20,7 +20,7 @@ $ ./neo4j start
 * Abrir un Navegador e ingresar como URL: http://localhost:7474
 * Ejecutar el script que  carga los registros del archivo.csv
 
-LOAD CSV FROM "file:///farmacos.csv" AS row CREATE (:Farmaco  {descripcion:row[0] , unidad:row[1], costo:toInt(row[2]), prventa:toInt(row[3])});
+  $ LOAD CSV FROM "file:///farmacos.csv" AS row CREATE (:Farmaco  {descripcion:row[0] , unidad:row[1], costo:toInt(row[2]), prventa:toInt(row[3])});
 
 * Bajar el servicio neo4j. Desde la carpeta bin hacer
 
