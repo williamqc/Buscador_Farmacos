@@ -1,5 +1,5 @@
 ﻿#  Proyecto Xtend contra una base Neo4J
-
+ la documentacion y los Scrips estan en  al carpeta documentos detro de un comprimido
 ## Objetivo
 Mostrar la integración entre una app hecha en JDK y Neo4J.
 
