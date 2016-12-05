@@ -18,6 +18,10 @@ $ ./neo4j start
 ```
 
 * Abrir un Navegador e ingresar como URL: http://localhost:7474
+
+*creamos la clave primaria para nuestras tablas
+  $CREATE CONSTRAINT ON (p:Person) ASSERT p.userId IS UNIQUE;
+
 * Ejecutar el script que  carga los registros del archivo.csv
 
   $ LOAD CSV FROM "file:///farmacos.csv" AS row CREATE (:Farmaco  {descripcion:row[0] , unidad:row[1], costo:toInt(row[2]), prventa:toInt(row[3])});
